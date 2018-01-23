@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot管理后台</title>
+</head>
+<h1>Welcome</h1>
+<body>
+<script src="/assets/js/jquery-2.0.3.min.js" type="application/javascript"></script>
+<img id="img" src="/assets/images/icon_user.png"/>
+<input type="button" onclick="findAll()" value="查看全部"/>
+<br/>
+第<input type="text" id="start"/>页 &nbsp;&nbsp;
+查<input type="text" id="end"/>条
+姓名<input type="text" id="name"/>
+<input type="button" onclick="findByPage()" value="查询"/>
+<script>
+    function findAll() {
+        $.ajax({
+            url: "/emp/findAll",
+            type: 'get',　　　　　　
+            dataType: 'json',　　　
+            async: false,　　　 　　
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    }
+    function findByPage() {
+        var start = $("#start").val();
+        var end = $("#end").val();
+        var name = $("#name").val();
+        $.ajax({
+            url: "/emp/findByPage",
+            type: 'post',
+            dataType: 'json',
+            data: {"currentPage":start,"pageSize":end,"name": name},
+            async: false,
+            success: function (data) {
+                console.log(JSON.stringify(data));
+            }
+        });
+    }
+</script>
+</body>
+</html>
